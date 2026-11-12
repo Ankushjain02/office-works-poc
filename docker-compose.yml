@@ -1,0 +1,22 @@
+services:
+  api:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+      PRODUCT_SOURCE: fake-store
+      PRODUCT_SOURCE_URL: https://fakestoreapi.com
+      FEATURED_PRODUCT_IDS: "1,5,9,15,11"
+      EMAIL_TRANSPORT: smtp
+      SMTP_HOST: mailpit
+      SMTP_PORT: "1025"
+      SALES_INBOX: sales@example.com
+      EMAIL_FROM: "Catalogue <catalogue@localhost>"
+    depends_on:
+      - mailpit
+  mailpit:
+    image: axllent/mailpit:v1.33.1
+    ports:
+      - "8025:8025"
+      - "1025:1025"
